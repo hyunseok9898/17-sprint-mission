@@ -46,6 +46,26 @@ public class User {
         return password;
     }
 
+    public void updata(String username, String email, String password) {
+        boolean changed = false;
+
+        if (username != null && !username.equals(this.username)) {
+            this.username = username;
+            changed = true;
+        }
+        if (email != null && !email.equals(this.email)) {
+            this.email = email;
+        }
+        if (password != null && !password.equals(this.password)) {
+            this.password = password;
+            changed = true;
+        }
+
+        if (changed) {
+            this.updatedAt = System.currentTimeMillis();
+        }
+    }
+
     @Override
     public String toString() {
         return "User{" +
