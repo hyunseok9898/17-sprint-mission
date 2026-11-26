@@ -57,8 +57,16 @@ public class JavaApplication {
         Channel channel1 = channelService.create("일반", "자유롭게 이야기하는 곳");
         Channel channel2 = channelService.create("게임방", "재밌게 게임하는 곳");
 
-        System.out.println("채널 전체 수: " + channelService.findAll().size());
-        System.out.println("채널 전체 조회: " + channelService.findAll());
-        System.out.println("채널 단건 조회: " + channelService.find(channel1.getId()));
+        channelService.update(channel1.getId(), "잡담", null);
+        System.out.println("채널 수정 후 조회: " + channelService.find(channel1.getId()));
+
+        channelService.delete(channel2.getId());
+        System.out.println("채널 삭제 후 전체 수: " + channelService.findAll().size());
+
+        try {
+            channelService.find(channel2.getId());
+        } catch (NoSuchElementException e) {
+            System.out.println("채널 삭제 확인: " + e.getMessage());
+        }
     }
 }

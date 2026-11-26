@@ -35,11 +35,15 @@ public class JCFChannelService implements ChannelService {
 
     @Override
     public Channel update(UUID id, String name, String description) {
-        throw new UnsupportedOperationException("12번 작업에서 구현");
+        Channel channel = find(id);
+        channel.update(name, description);
+        return channel;
     }
 
     @Override
-    public Channel delete(UUID id) {
-        throw new UnsupportedOperationException("12번 작업에서 구현");
+    public void delete(UUID id) {
+        if (data.remove(id) == null) {
+            throw new NoSuchElementException("Channel을 찾을 수 없습니다. id=" + id);
+        }
     }
 }
