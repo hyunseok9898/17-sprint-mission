@@ -4,8 +4,10 @@ import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.service.ChannelService;
+import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.service.jcf.JCFChannelService;
+import com.sprint.mission.discodeit.service.jcf.JCFMessageService;
 import com.sprint.mission.discodeit.service.jcf.JCFUserService;
 
 import java.util.NoSuchElementException;
@@ -31,9 +33,9 @@ public class JavaApplication {
 //        message.update("반갑습니다~!!");
 //        System.out.println("수정 후 : " + message);
 
-//        UserService userService = new JCFUserService();
+        UserService userService = new JCFUserService();
 //
-//        User user1 = userService.create("hyunseok", "hyunseok@example.com", "1234");
+        User user1 = userService.create("hyunseok", "hyunseok@example.com", "1234");
 //        User user2 = userService.create("codeit", "codeit@example.com", "5678");
 //
 //        userService.update(user1.getId(), "hyunseok2", null, null);
@@ -63,10 +65,18 @@ public class JavaApplication {
         channelService.delete(channel2.getId());
         System.out.println("채널 삭제 후 전체 수: " + channelService.findAll().size());
 
-        try {
-            channelService.find(channel2.getId());
-        } catch (NoSuchElementException e) {
-            System.out.println("채널 삭제 확인: " + e.getMessage());
-        }
+//        try {
+//            channelService.find(channel2.getId());
+//        } catch (NoSuchElementException e) {
+//            System.out.println("채널 삭제 확인: " + e.getMessage());
+//        }
+
+        MessageService messageService = new JCFMessageService();
+        Message message1 = messageService.create("안녕하세요", channel1.getId(), user1.getId());
+        Message message2 = messageService.create("반갑습니다", channel1.getId(), user1.getId());
+
+        System.out.println("메시지 전체 수: " + messageService.findAll().size());
+        System.out.println("메시지 전체 조회: " + messageService.findAll());
+        System.out.println("메시지 단건 조회: " + messageService.find(message1.getId()));
     }
 }
