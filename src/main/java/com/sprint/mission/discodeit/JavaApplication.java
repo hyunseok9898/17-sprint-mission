@@ -3,7 +3,9 @@ package com.sprint.mission.discodeit;
 import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.UserService;
+import com.sprint.mission.discodeit.service.jcf.JCFChannelService;
 import com.sprint.mission.discodeit.service.jcf.JCFUserService;
 
 import java.util.NoSuchElementException;
@@ -29,25 +31,34 @@ public class JavaApplication {
 //        message.update("반갑습니다~!!");
 //        System.out.println("수정 후 : " + message);
 
-        UserService userService = new JCFUserService();
-
-        User user1 = userService.create("hyunseok", "hyunseok@example.com", "1234");
-        User user2 = userService.create("codeit", "codeit@example.com", "5678");
-
-        userService.update(user1.getId(), "hyunseok2", null, null);
-        System.out.println("수정 후 조회: " + userService.find(user1.getId()));
-
-        userService.delete(user2.getId());
-        System.out.println("삭제 후 전체 수: " + userService.findAll().size());
-
-        try {
-            userService.find(user2.getId());
-        } catch (NoSuchElementException e) {
-            System.out.println("삭제확인 : " + e.getMessage());
-        }
+//        UserService userService = new JCFUserService();
+//
+//        User user1 = userService.create("hyunseok", "hyunseok@example.com", "1234");
+//        User user2 = userService.create("codeit", "codeit@example.com", "5678");
+//
+//        userService.update(user1.getId(), "hyunseok2", null, null);
+//        System.out.println("수정 후 조회: " + userService.find(user1.getId()));
+//
+//        userService.delete(user2.getId());
+//        System.out.println("삭제 후 전체 수: " + userService.findAll().size());
+//
+//        try {
+//            userService.find(user2.getId());
+//        } catch (NoSuchElementException e) {
+//            System.out.println("삭제확인 : " + e.getMessage());
+//        }
 
 //        System.out.println("전체 조회 수: " + userService.findAll().size());
 //        System.out.println("전체 조회: " + userService.findAll());
 //        System.out.println("단건 조회: " + userService.find(user1.getId()));
+
+        ChannelService channelService = new JCFChannelService();
+
+        Channel channel1 = channelService.create("일반", "자유롭게 이야기하는 곳");
+        Channel channel2 = channelService.create("게임방", "재밌게 게임하는 곳");
+
+        System.out.println("채널 전체 수: " + channelService.findAll().size());
+        System.out.println("채널 전체 조회: " + channelService.findAll());
+        System.out.println("채널 단건 조회: " + channelService.find(channel1.getId()));
     }
 }
