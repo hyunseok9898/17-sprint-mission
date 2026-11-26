@@ -6,6 +6,8 @@ import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.service.jcf.JCFUserService;
 
+import java.util.NoSuchElementException;
+
 public class JavaApplication {
     public static void main(String[] args) {
 //        User user = new User("hyunseok", "hyunseok@example.com", "1234");
@@ -32,8 +34,20 @@ public class JavaApplication {
         User user1 = userService.create("hyunseok", "hyunseok@example.com", "1234");
         User user2 = userService.create("codeit", "codeit@example.com", "5678");
 
-        System.out.println("전체 조회 수: " + userService.findAll().size());
-        System.out.println("전체 조회: " + userService.findAll());
-        System.out.println("단건 조회: " + userService.find(user1.getId()));
+        userService.update(user1.getId(), "hyunseok2", null, null);
+        System.out.println("수정 후 조회: " + userService.find(user1.getId()));
+
+        userService.delete(user2.getId());
+        System.out.println("삭제 후 전체 수: " + userService.findAll().size());
+
+        try {
+            userService.find(user2.getId());
+        } catch (NoSuchElementException e) {
+            System.out.println("삭제확인 : " + e.getMessage());
+        }
+
+//        System.out.println("전체 조회 수: " + userService.findAll().size());
+//        System.out.println("전체 조회: " + userService.findAll());
+//        System.out.println("단건 조회: " + userService.find(user1.getId()));
     }
 }

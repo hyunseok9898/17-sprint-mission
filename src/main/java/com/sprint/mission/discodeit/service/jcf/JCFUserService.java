@@ -35,11 +35,15 @@ public class JCFUserService implements UserService {
 
     @Override
     public User update(UUID id, String username, String email, String password) {
-        throw new UnsupportedOperationException("10번 작업에서 구현");
+        User user = find(id);
+        user.updata(username, email, password);
+        return user;
     }
 
     @Override
     public void delete(UUID id) {
-        throw new UnsupportedOperationException("10번 작업에서 구현");
+        if (data.remove(id) == null) {
+            throw new NoSuchElementException("User를 찾을 수 없습니다. id = " + id);
+        }
     }
 }
