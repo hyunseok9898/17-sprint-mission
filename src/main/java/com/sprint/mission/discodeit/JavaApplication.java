@@ -16,7 +16,7 @@ public class JavaApplication {
     public static void main(String[] args) {
         UserService userService = new JCFUserService();
         ChannelService channelService = new JCFChannelService();
-        MessageService messageService = new JCFMessageService();
+        MessageService messageService = new JCFMessageService(userService, channelService);
 
         userTest(userService);
         channelTest(channelService);
