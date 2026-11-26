@@ -11,6 +11,7 @@ import com.sprint.mission.discodeit.service.jcf.JCFMessageService;
 import com.sprint.mission.discodeit.service.jcf.JCFUserService;
 
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 public class JavaApplication {
     public static void main(String[] args) {
@@ -21,6 +22,7 @@ public class JavaApplication {
         userTest(userService);
         channelTest(channelService);
         messageTest(messageService, userService, channelService);
+        messageValidationTest(messageService, userService, channelService);
     }
 
     private static void userTest(UserService userService) {
@@ -122,5 +124,37 @@ public class JavaApplication {
         } catch (NoSuchElementException e) {
             System.out.println("삭제됨: " + e.getMessage());
         }
+    }
+
+    private static void messageValidationTest(MessageService messageService,
+                                              UserService userService,
+                                              ChannelService channelService) {
+        System.out.println();
+        System.out.println("========== Message 생성 검증 테스트 ==========");
+
+        User author = userService.create("checker", "checker@example.com", "0000");
+        Channel channel = channelService.create("검증", "검증용 채널");
+        int before = messageService.findAll().size();
+
+        System.out.println("[검증] 1.없는 작성자로 생성");
+        try {
+            messageService.create("유령 메시지", channel.getId(), UUID.randomUUID());
+        } catch (NoSuchElementException e) {
+            System.out.println("실패: " + e.getMessage());
+        }
+
+        System.out.println("[검증] 2.없는 채널로 생성");
+        try {
+            messageService.create("갈 곳 없는 메시지", UUID.randomUUID(), author.getId());
+        } catch (NoSuchElementException e) {
+            System.out.println("실패: " + e.getMessage());
+        }
+
+        System.out.println("[검증] 3.정상 id로 생성");
+        Message ok = messageService.create("정상 메시지", channel.getId(), author.getId());
+        System.out.println("성공: " + ok);
+
+        System.out.println("[검증] 4.저장 개수 확인");
+        System.out.println("검증 전 " + before + "개 → 검증 후 " + messageService.findAll().size() + "개");
     }
 }

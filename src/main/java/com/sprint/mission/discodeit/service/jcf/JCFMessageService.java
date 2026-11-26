@@ -22,6 +22,9 @@ public class JCFMessageService implements MessageService {
 
     @Override
     public Message create(String content, UUID channelId, UUID authorId) {
+       userService.find(authorId);
+       channelService.find(channelId);
+
         Message message = new Message(content, channelId, authorId);
         data.put(message.getId(), message);
         return message;
