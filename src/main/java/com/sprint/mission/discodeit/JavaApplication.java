@@ -3,6 +3,7 @@ package com.sprint.mission.discodeit;
 import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.factory.ServiceFactory;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
@@ -15,14 +16,26 @@ import java.util.UUID;
 
 public class JavaApplication {
     public static void main(String[] args) {
-        UserService userService = new JCFUserService();
-        ChannelService channelService = new JCFChannelService();
-        MessageService messageService = new JCFMessageService(userService, channelService);
+        ServiceFactory factory = ServiceFactory.getInstance();
+        UserService userService = factory.getUserService();
+        ChannelService channelService = factory.getChannelService();
+        MessageService messageService = factory.getMessageService();
 
         userTest(userService);
         channelTest(channelService);
         messageTest(messageService, userService, channelService);
         messageValidationTest(messageService, userService, channelService);
+
+        singletonTest();
+    }
+
+    private static void singletonTest() {
+        System.out.println();
+        System.out.println("========== 싱글톤 확인 ==========");
+        ServiceFactory f1 = ServiceFactory.getInstance();
+        ServiceFactory f2 = ServiceFactory.getInstance();
+        System.out.println("팩토리 같은 객체? " + (f1 == f2));
+        System.out.println("UserService 같은 객체? " + (f1.getUserService() == f2.getUserService()));
     }
 
     private static void userTest(UserService userService) {
