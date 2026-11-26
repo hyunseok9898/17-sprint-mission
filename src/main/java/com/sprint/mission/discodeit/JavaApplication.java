@@ -78,5 +78,17 @@ public class JavaApplication {
         System.out.println("메시지 전체 수: " + messageService.findAll().size());
         System.out.println("메시지 전체 조회: " + messageService.findAll());
         System.out.println("메시지 단건 조회: " + messageService.find(message1.getId()));
+
+        messageService.update(message1.getId(), "안녕하세요! 수정된 메시지입니다");
+        System.out.println("메시지 수정 후 조회: " + messageService.find(message1.getId()));
+
+        messageService.delete(message2.getId());
+        System.out.println("메시지 삭제 후 전체 수: " + messageService.findAll().size());
+
+        try {
+            messageService.find(message2.getId());
+        } catch (NoSuchElementException e) {
+            System.out.println("메시지 삭제 확인: " + e.getMessage());
+        }
     }
 }

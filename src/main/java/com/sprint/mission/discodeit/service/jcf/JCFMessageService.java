@@ -36,11 +36,15 @@ public class JCFMessageService implements MessageService {
 
     @Override
     public Message update(UUID id, String content) {
-        throw new UnsupportedOperationException("14번 작업에서 구현");
+        Message message = data.get(id);
+        message.update(content);
+        return message;
     }
 
     @Override
     public void delete(UUID id) {
-        throw new UnsupportedOperationException("14번 작업에서 구현");
+        if (data.remove(id) == null){
+            throw new NoSuchElementException("Message를 찾을 수 없습니다. id=" + id);
+        }
     }
 }
