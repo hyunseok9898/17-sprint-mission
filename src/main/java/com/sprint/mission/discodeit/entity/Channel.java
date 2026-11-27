@@ -9,15 +9,21 @@ public class Channel {
     private Long updatedAt;
 
     // 고유 필드
+    private final ChannelType type;
     public String name;
     private String description;
 
-    public Channel(String name, String description) {
+    public Channel(ChannelType type, String name, String description) {
         this.id = UUID.randomUUID();
         this.createdAt = System.currentTimeMillis();
         this.updatedAt = createdAt;
+        this.type = type;
         this.name = name;
         this.description = description;
+    }
+
+    public ChannelType getType() {
+        return type;
     }
 
     public UUID getId() {
@@ -63,6 +69,7 @@ public class Channel {
                 "id=" + id +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
+                ", type=" + type +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';

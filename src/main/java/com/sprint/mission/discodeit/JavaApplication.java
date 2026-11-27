@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit;
 
 import com.sprint.mission.discodeit.entity.Channel;
+import com.sprint.mission.discodeit.entity.ChannelType;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.factory.ServiceFactory;
@@ -74,8 +75,8 @@ public class JavaApplication {
         System.out.println("========== Channel 테스트 ==========");
 
         System.out.println("[Channel] 1.등록");
-        Channel channel1 = channelService.create("일반", "자유롭게 이야기하는 곳");
-        Channel channel2 = channelService.create("공지", "공지사항 채널");
+        Channel channel1 = channelService.create(ChannelType.PUBLIC, "일반", "자유롭게 이야기하는 곳");
+        Channel channel2 = channelService.create(ChannelType.PUBLIC, "공지", "공지사항 채널");
         System.out.println("등록: " + channel1);
         System.out.println("등록: " + channel2);
 
@@ -109,7 +110,7 @@ public class JavaApplication {
 
         // 메시지에 필요한 작성자와 채널 준비
         User author = userService.create("writer", "writer@example.com", "0000");
-        Channel channel = channelService.create("질문", "질문하는 채널");
+        Channel channel = channelService.create(ChannelType.PUBLIC, "질문", "질문하는 채널");
 
         System.out.println("[Message] 1.등록");
         Message message1 = messageService.create("안녕하세요", channel.getId(), author.getId());
@@ -146,7 +147,7 @@ public class JavaApplication {
         System.out.println("========== Message 생성 검증 테스트 ==========");
 
         User author = userService.create("checker", "checker@example.com", "0000");
-        Channel channel = channelService.create("검증", "검증용 채널");
+        Channel channel = channelService.create(ChannelType.PUBLIC, "검증", "검증용 채널");
         int before = messageService.findAll().size();
 
         System.out.println("[검증] 1.없는 작성자로 생성");
