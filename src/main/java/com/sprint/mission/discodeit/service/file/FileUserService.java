@@ -80,11 +80,20 @@ public class FileUserService implements UserService {
 
     @Override
     public User update(UUID id, String username, String email, String password) {
-        throw new UnsupportedOperationException("5번 작업에서 구현");
+        User user = find(id);
+        user.updata(username, email, password);
+        save(user);
+        return user;
     }
 
     @Override
     public void delete(UUID id) {
-        throw new UnsupportedOperationException("5번 작업에서 구현");
+        try {
+            if (!Files.deleteIfExists(resolvePath(id))) {
+                throw new NoSuchElementException("User를 찾을 수 없습니다. id = " + id);
+            }
+        } catch (IOException e) {
+            throw new UncheckedIOException("User를 삭제할 수 없습니다. id = " + id, e);
+        }
     }
 }
